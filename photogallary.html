@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Photo Gallery</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f0f0f0;
+    }
+
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    .photo {
+      position: relative;
+      width: 150px;
+    }
+
+    .photo img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .photo button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    #box{
+        height: auto;
+        width: 500px;
+         
+        margin-left: 30%;
+        border-radius: 8px;
+        background-color: rgb(189, 144, 231);
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;
+    }
+  </style>
+</head>
+<body>
+    <div id="box"> 
+
+  <h2>Photo Gallery</h2>
+  <input type="file" id="upload" accept="image/*" multiple>
+  <div id="gallery"></div></div>
+
+  <script>
+    const upload = document.getElementById('upload');
+    const gallery = document.getElementById('gallery');
+
+    upload.addEventListener('change', function () {
+      Array.from(upload.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const div = document.createElement('div');
+          div.className = 'photo';
+
+          const img = document.createElement('img');
+          img.src = e.target.result;
+
+          const btn = document.createElement('button');
+          btn.textContent = '×';
+          btn.onclick = () => gallery.removeChild(div);
+
+          div.appendChild(img);
+          div.appendChild(btn);
+          gallery.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      upload.value = ''; // Reset input
+    });
+  </script>
+
+</body>
+</html>
